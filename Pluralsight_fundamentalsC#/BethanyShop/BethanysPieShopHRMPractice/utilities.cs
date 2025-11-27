@@ -1,4 +1,4 @@
-namespace BethanysPieShopHRM
+namespace BethanysPieShopHRMPractice
 {
     internal class  Utilities
     {
@@ -36,6 +36,38 @@ namespace BethanysPieShopHRM
             string subString = fullName.Substring(1, 3);
             Console.WriteLine($"Characters from index 1 to 3: {subString}");
 
+        }
+        public static void UsingEscapeSequences()
+        {
+            string filePath = "C:\\Users\\Bethany\\Documents\\EmployeeData.txt";
+            string verbatimFilePath = @"C:\Users\Bethany\Documents\EmployeeData.txt";
+
+            Console.WriteLine($"File Path using escape sequences: {filePath}");
+            Console.WriteLine($"File Path using verbatim string: {verbatimFilePath}");
+        }
+
+        public static void UsingStringEquality()
+        {
+            string name1 = "Bethany";
+            string name2 = "BETHANY";
+
+            Console.WriteLine($"Are both names equal? {name1 == name2}"); 
+            Console.WriteLine($"Are both names equal (case-insensitive)? {name1.ToLower().Equals(name2.ToLower())}");           
+        }
+        
+        public static void ParsingStrings()
+        {
+            Console.WriteLine("Enter your wage: ");
+            string wageInput = Console.ReadLine();
+
+            if (int.TryParse(wageInput, out int wage))
+            {
+                Console.WriteLine($"Your wage is: {wage}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid wage input.");
+            }
         }
     }
 }
