@@ -12,6 +12,19 @@ namespace BethanysPieShopHRM
         public double hourlyRate;
         public DateTime dateOfBirth;
         const int minimalHoursWorkedUnit = 1;
+
+        public Employee(string first, string last, string em, DateTime dob) : this(first, last, em, dob, 0)
+        {
+            
+        }
+        public Employee(string first, string last, string em, DateTime dob, double Rate)
+        {
+            firstName = first;
+            lastName = last;
+            email = em;
+            dateOfBirth = dob;
+            hourlyRate = Rate;
+        }
         public void PerformWork()
         {
             PerformWork(minimalHoursWorkedUnit);
