@@ -1,18 +1,53 @@
-﻿using BethanysPieShopHRM;
+﻿using System.Text;
+using BethanysPieShopHRM;
+
 
 Console.WriteLine("Creating an employee!");
 Console.WriteLine("------------------\n");
 
-Employee employee1 = new("Bethany", "Smith", "bethany.smith@hotmail.com", new DateTime(1990, 5, 23), 25);
+Employee employee1 = new("Bethany", "Smith", "bethany.smith@hotmail.com", new DateTime(1990, 5, 23), 25, EmployeeType.Manager);
+/*employee1.PerformWork(25);
+
+int minimumBonus = 100;
+int bonusTax; // if using ref then this needs to be initialized first
+int receivedBonus = employee1.CalculateBonusAndBonusTax(minimumBonus, out bonusTax); // out can be changed to ref
+Console.WriteLine($"Minimum bonus was: {minimumBonus}, {employee1.firstName} received a bonus of: {receivedBonus}, and bonus tax is: {bonusTax}");*/
+
+StringBuilder sb = new StringBuilder();
+sb.Append("Last name: ");
+sb.AppendLine(employee1.lastName);
+sb.AppendLine("First name: ");
+sb.AppendLine(employee1.firstName);
+string result = sb.ToString();
+
+Console.WriteLine(result);
+
+
+int minimumBonus = 100;
+int receivedBonus = employee1.CalculateBonus(minimumBonus);
+Console.WriteLine($"Minimum bonus was: {minimumBonus} and {employee1.firstName} received a bonus of: {receivedBonus}");
+
+
+Employee testemployee = employee1; // testemployee references the same object as employee1
+
+testemployee.DisplayEmployeeDetails();
 employee1.DisplayEmployeeDetails();
+
 employee1.hourlyRate = 10;
-employee1.PerformWork(8);
+employee1.PerformWork(25);
 double employee1Wage = employee1.ReceiveWage(true);
 
 Console.WriteLine("Creating an employee!");
 Console.WriteLine("------------------\n");
 
-Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1985, 3, 15), 30);
+Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1985, 3, 15), 30, EmployeeType.Sales);
 employee2.DisplayEmployeeDetails();
 employee2.PerformWork(4);
-double employee2Wage = employee2.ReceiveWage(false);    
+double employee2Wage = employee2.ReceiveWage(false);
+
+WorkTask task1; // can use new to initialize struct but its not required since it is a value type
+task1.description = "Baking pies";
+task1.hours = 2;
+task1.PerformWorkTask();
+    
+
