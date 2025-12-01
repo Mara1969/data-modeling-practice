@@ -1,7 +1,7 @@
 
 using Newtonsoft.Json;  
 
-namespace BethanysPieShopHRM
+namespace BethanysPieShopHRM.HR
 {
     internal class Employee
     {
@@ -10,23 +10,25 @@ namespace BethanysPieShopHRM
         public string email;
         public int numberOfHoursWorked;
         public double wage;
-        public double hourlyRate;
+        public double? hourlyRate;
         public DateTime dateOfBirth;
         const int minimalHoursWorkedUnit = 1;
 
         public EmployeeType employeeType; // becomes data that we store on our class 
 
+        public static double taxRate = 0.15; // static member belongs to the class itself rather than to any specific object
+
         public Employee(string first, string last, string em, DateTime dob) : this(first, last, em, dob, 0, EmployeeType.Researcher)
         {
             
         }
-        public Employee(string first, string last, string em, DateTime dob, double Rate, EmployeeType empType)
+        public Employee(string first, string last, string em, DateTime dob, double? Rate, EmployeeType empType)
         {
             firstName = first;
             lastName = last;
             email = em;
             dateOfBirth = dob;
-            hourlyRate = Rate;
+            hourlyRate = Rate ?? 20; // if Rate is null then assign 20
             employeeType = empType;
         }
         public void PerformWork()
@@ -40,15 +42,21 @@ namespace BethanysPieShopHRM
         }
         public double ReceiveWage(bool resetHours = true)
         {
+            double wageBeforeTax = 0.0;
+
             if (employeeType == EmployeeType.Manager)
             {
-                Console.WriteLine($"An extra was added to the wage since {firstName} is a manager.");
-                wage = numberOfHoursWorked * hourlyRate * 1.25;
+                Console.WriteLine($"An extra was added to the wage since {firstName} is a manager."); 
+                wageBeforeTax = numberOfHoursWorked * hourlyRate.Value * 1.25;
             }
             else
             {
-                wage = numberOfHoursWorked * hourlyRate;
+                wageBeforeTax = numberOfHoursWorked * hourlyRate.Value;
             }
+
+            double taxAmount = wageBeforeTax * taxRate;
+            wage = wageBeforeTax - taxAmount;   
+
             Console.WriteLine($"{firstName} {lastName} has received a wage of {wage} for {numberOfHoursWorked} hours worked.");
             
             if (resetHours)
@@ -58,9 +66,9 @@ namespace BethanysPieShopHRM
         }
         public void DisplayEmployeeDetails()
         {
-            Console.WriteLine($"\nFist name: \t{firstName}\nLast name: \t{lastName}\nEmail: \t\t{email}\nDate of Birth: \t{dateOfBirth.ToShortDateString()}");
+            Console.WriteLine($"\nFist name: \t{firstName}\nLast name: \t{lastName}\nEmail: \t\t{email}\nDate of Birth: \t{dateOfBirth.ToShortDateString()}\nTax rate: \t{taxRate}");
         }
-        
+
         public int CalculateBonus(int bonus)
         {
             if (numberOfHoursWorked > 10)

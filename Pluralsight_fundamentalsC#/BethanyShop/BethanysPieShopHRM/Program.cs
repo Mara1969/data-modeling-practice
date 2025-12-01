@@ -1,17 +1,32 @@
 ﻿using System.Text;
-using BethanysPieShopHRM;
+using BethanysPieShopHRM.Accounting;
+using BethanysPieShopHRM.HR;
 
 
 Console.WriteLine("Creating an employee!");
 Console.WriteLine("------------------\n");
 
 Employee employee1 = new("Bethany", "Smith", "bethany.smith@hotmail.com", new DateTime(1990, 5, 23), 25, EmployeeType.Manager);
+Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1989, 1, 15), 30, EmployeeType.Sales);
+Employee employee3 = new("Kevin", "Jones", "john.doe@hotmail,com", new DateTime(1969, 2, 15), 30, EmployeeType.Sales);
+Employee employee4 = new("Kim", "Dodds", "john.doe@hotmail,com", new DateTime(1992, 7, 15), 30, EmployeeType.Researcher);
+
+Employee[] employees = new Employee[4] { employee1,  employee2, employee3, employee4 };
+
+foreach (Employee emp in employees)
+{
+    emp.DisplayEmployeeDetails();
+    var numberOfHoursWorked = new Random().Next(25); // generate random number between 0 and 24
+    emp.PerformWork(numberOfHoursWorked);
+    emp.ReceiveWage();
+}
+
 /*employee1.PerformWork(25);
 
 int minimumBonus = 100;
 int bonusTax; // if using ref then this needs to be initialized first
 int receivedBonus = employee1.CalculateBonusAndBonusTax(minimumBonus, out bonusTax); // out can be changed to ref
-Console.WriteLine($"Minimum bonus was: {minimumBonus}, {employee1.firstName} received a bonus of: {receivedBonus}, and bonus tax is: {bonusTax}");*/
+Console.WriteLine($"Minimum bonus was: {minimumBonus}, {employee1.firstName} received a bonus of: {receivedBonus}, and bonus tax is: {bonusTax}");
 
 StringBuilder sb = new StringBuilder();
 sb.Append("Last name: ");
@@ -50,4 +65,5 @@ task1.description = "Baking pies";
 task1.hours = 2;
 task1.PerformWorkTask();
     
+Customer customer1 = new Customer(); */
 

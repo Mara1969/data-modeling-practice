@@ -1,5 +1,5 @@
 
-namespace BethanysPieShopHRM;
+namespace BethanysPieShopHRM.HR;
 
 internal struct WorkTask
 {

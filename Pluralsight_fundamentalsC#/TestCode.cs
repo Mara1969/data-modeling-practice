@@ -143,3 +143,15 @@ switch (userAge)
         break;
 }
 */ 
+
+int[] sampleAray1 = new int[5]; // array of 5 integers
+int[] sampleArray2 = new int[] { 1, 2, 3, 4, 5 }; // array of 5 integers initialized with values
+
+int length = int.Parse(Console.ReadLine());
+
+for (int i = 0; i < length; i++)
+{
+    Console.Write("Enter the employee ID:");
+    int id = int.Parse(Console.ReadLine());
+    employeeIDs[i] = id;
+}

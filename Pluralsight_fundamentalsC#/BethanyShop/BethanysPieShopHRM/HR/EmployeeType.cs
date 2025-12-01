@@ -1,4 +1,4 @@
-namespace BethanysPieShopHRM;
+namespace BethanysPieShopHRM.HR;
 
 public enum EmployeeType
 {
