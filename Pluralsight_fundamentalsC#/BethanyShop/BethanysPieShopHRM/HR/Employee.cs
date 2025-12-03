@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace BethanysPieShopHRM.HR
 {
-    internal class Employee
+    internal class Employee : IEmployee
     {
         private string firstName;
         private string lastName;
@@ -175,6 +175,10 @@ namespace BethanysPieShopHRM.HR
             string json = JsonConvert.SerializeObject(this);
             return json;
         }
-    
+
+        public void GiveCompliment()
+        {
+            Console.WriteLine($"{FirstName}, You've done a great job!");
+        }
     }
 }

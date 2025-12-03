@@ -26,11 +26,28 @@ string streetName = employee2.Address.Street;
 manager2.GiveBonus(); // calls the method from Employee class
 manager1.GiveBonus(); // calls the overridden method from Manager class
 
+IEmployee iemployee1 = new IEmployee(); // will cause compile error since interfaces cannot be instantiated
+IEmployee employee5 = new Employee("Laura", "Brown", "laura.brown@hotmail.com", new DateTime(1991, 4, 14), 27); // can reference an Employee object through IEmployee interface
+
+List<IEmployee> employees = new List<IEmployee>();
+employees.Add(employee1);
+employees.Add(manager1);
+employees.Add(manager2);
+employees.Add(employee5);
+
+foreach (IEmployee emp in employees)
+{
+    emp.DisplayEmployeeDetails();
+    emp.PerformWork(20);
+    emp.GiveBonus();
+    emp.GiveCompliment();
+}
+
 /* Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1989, 1, 15), 30);
 Employee employee3 = new("Kevin", "Jones", "john.doe@hotmail,com", new DateTime(1969, 2, 15), 30);
 Employee employee4 = new("Kim", "Dodds", "john.doe@hotmail,com", new DateTime(1992, 7, 15), 30);
 
-Employee[] employees = new Employee[4] { employee1,  employee2, employee3, employee4 };
+Employee[] employees = new Employee[4] { employee1,  employee2, employee3, employee4 }; 
 
 foreach (Employee emp in employees)
 {
