@@ -10,6 +10,8 @@ Employee employee1 = new("Bethany", "Smith", "bethany.smith@hotmail.com", new Da
 
 Manager manager1 = new("Alice", "Johnson", "alice.johnson@hotmail.com", new DateTime(1985, 8, 12), 40);
 
+Employee manager2 = new Manager("Bob", "Williams", "bob.williams@hotmail.com", new DateTime(1978, 3, 30), 45); // defined on the base class Employee
+
 employee1.DisplayEmployeeDetails();
 manager1.DisplayEmployeeDetails();
 manager1.PerformWork(25);
@@ -18,7 +20,11 @@ manager1.ReceiveWage();
 manager1.AttendManagementMeeting();
 // employee1.attendManagementMeeting(); will cause compile error since Employee class does not have this method
 
-Employee employee2 = new Employee("Jake", "Nicols", "jake@snowball.com"
+Employee employee2 = new Employee("Jake", "Nicols", "jake@snowball.com", new DateTime(1992, 11, 5), 28, "Maple Street", "12B", "Springfield", "54321");
+string streetName = employee2.Address.Street;
+
+manager2.GiveBonus(); // calls the method from Employee class
+manager1.GiveBonus(); // calls the overridden method from Manager class
 
 /* Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1989, 1, 15), 30);
 Employee employee3 = new("Kevin", "Jones", "john.doe@hotmail,com", new DateTime(1969, 2, 15), 30);

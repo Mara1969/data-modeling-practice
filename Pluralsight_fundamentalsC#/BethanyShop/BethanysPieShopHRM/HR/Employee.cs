@@ -135,6 +135,10 @@ namespace BethanysPieShopHRM.HR
             Console.WriteLine($"The employee got a bonus of: {bonus}");
             return bonus;
         }
+        public virtual void GiveBonus() // virtual so derived classes can override
+        {
+            Console.WriteLine($"{FirstName} {LastName} received a generic bonus of 100!");
+        }
 
         /*public int CalculateBonusAndBonusTax(int bonus, ref int bonusTax)
         {
@@ -171,5 +175,6 @@ namespace BethanysPieShopHRM.HR
             string json = JsonConvert.SerializeObject(this);
             return json;
         }
+    
     }
 }
