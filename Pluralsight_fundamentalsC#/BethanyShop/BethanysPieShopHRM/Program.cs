@@ -21,6 +21,9 @@ foreach (Employee emp in employees)
     emp.ReceiveWage();
 }
 
+employee1.FirstName = "Jane";
+string empFirstName = employee1.FirstName;
+
 /*employee1.PerformWork(25);
 
 int minimumBonus = 100;
