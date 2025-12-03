@@ -18,6 +18,8 @@ manager1.ReceiveWage();
 manager1.AttendManagementMeeting();
 // employee1.attendManagementMeeting(); will cause compile error since Employee class does not have this method
 
+Employee employee2 = new Employee("Jake", "Nicols", "jake@snowball.com"
+
 /* Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1989, 1, 15), 30);
 Employee employee3 = new("Kevin", "Jones", "john.doe@hotmail,com", new DateTime(1969, 2, 15), 30);
 Employee employee4 = new("Kim", "Dodds", "john.doe@hotmail,com", new DateTime(1992, 7, 15), 30);

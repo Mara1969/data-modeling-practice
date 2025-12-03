@@ -15,6 +15,7 @@ namespace BethanysPieShopHRM.HR
         private const int minimalHoursWorkedUnit = 1;
 
         // private EmployeeType employeeType; // becomes data that we store on our class 
+        private Address address; // Address class as a member of Employee class (has a relationship)
 
         public static double taxRate = 0.15; // static member belongs to the class itself rather than to any specific object
 
@@ -63,6 +64,12 @@ namespace BethanysPieShopHRM.HR
                 }
             }
         }
+        public Address Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
         /*public EmployeeType employeeType 
         { 
             get { return employeeType; }
@@ -81,6 +88,16 @@ namespace BethanysPieShopHRM.HR
             DateOfBirth = dateOfBirth;
             HourlyRate = hourlyRate ?? 20; // if Rate is null then assign 20
             //employeeType = empType;
+        }
+          public Employee(string firstName, string lastName, string email, DateTime dateOfBirth, double? hourlyRate, string street, string houseNumber, string city, string zipCode)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+            HourlyRate = hourlyRate ?? 20; 
+            Address = new Address(street, houseNumber, city, zipCode); // initialize Address member
+            
         }
         public void PerformWork()
         {

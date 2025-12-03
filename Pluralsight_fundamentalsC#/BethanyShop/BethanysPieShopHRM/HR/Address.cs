@@ -1,0 +1,44 @@
+using System;
+
+namespace BethanysPieShopHRM.HR
+{
+    internal class Address
+    {
+        private string street;
+        private string houseNumber;
+        private string city;
+        private string zipCode;
+        public Address(string street, string houseNumber, string city, string zipCode)
+        {
+            Street = street;
+            HouseNumber = houseNumber;
+            City = city;
+            ZipCode = zipCode;
+        }
+        public string Street
+        {
+            get { return street; }
+            set { street = value; }
+        }
+        public string HouseNumber
+        {
+            get { return houseNumber; }
+            set { houseNumber = value; }
+        }
+        public string City
+        {
+            get { return city; }
+            set { city = value; }
+        }
+        public string ZipCode
+        {
+            get { return zipCode; }
+            set { zipCode = value; }
+        }
+
+    }
+
+
+    
+}
+
