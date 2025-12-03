@@ -26,7 +26,7 @@ string streetName = employee2.Address.Street;
 manager2.GiveBonus(); // calls the method from Employee class
 manager1.GiveBonus(); // calls the overridden method from Manager class
 
-IEmployee iemployee1 = new IEmployee(); // will cause compile error since interfaces cannot be instantiated
+//IEmployee iemployee1 = new IEmployee(); // will cause compile error since interfaces cannot be instantiated
 IEmployee employee5 = new Employee("Laura", "Brown", "laura.brown@hotmail.com", new DateTime(1991, 4, 14), 27); // can reference an Employee object through IEmployee interface
 
 List<IEmployee> employees = new List<IEmployee>();
