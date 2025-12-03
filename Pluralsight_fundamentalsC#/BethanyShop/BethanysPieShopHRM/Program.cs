@@ -6,10 +6,21 @@ using BethanysPieShopHRM.HR;
 Console.WriteLine("Creating an employee!");
 Console.WriteLine("------------------\n");
 
-Employee employee1 = new("Bethany", "Smith", "bethany.smith@hotmail.com", new DateTime(1990, 5, 23), 25, EmployeeType.Manager);
-Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1989, 1, 15), 30, EmployeeType.Sales);
-Employee employee3 = new("Kevin", "Jones", "john.doe@hotmail,com", new DateTime(1969, 2, 15), 30, EmployeeType.Sales);
-Employee employee4 = new("Kim", "Dodds", "john.doe@hotmail,com", new DateTime(1992, 7, 15), 30, EmployeeType.Researcher);
+Employee employee1 = new("Bethany", "Smith", "bethany.smith@hotmail.com", new DateTime(1990, 5, 23), 25);
+
+Manager manager1 = new("Alice", "Johnson", "alice.johnson@hotmail.com", new DateTime(1985, 8, 12), 40);
+
+employee1.DisplayEmployeeDetails();
+manager1.DisplayEmployeeDetails();
+manager1.PerformWork(25);
+manager1.ReceiveWage();
+
+manager1.AttendManagementMeeting();
+// employee1.attendManagementMeeting(); will cause compile error since Employee class does not have this method
+
+/* Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1989, 1, 15), 30);
+Employee employee3 = new("Kevin", "Jones", "john.doe@hotmail,com", new DateTime(1969, 2, 15), 30);
+Employee employee4 = new("Kim", "Dodds", "john.doe@hotmail,com", new DateTime(1992, 7, 15), 30);
 
 Employee[] employees = new Employee[4] { employee1,  employee2, employee3, employee4 };
 
@@ -24,7 +35,7 @@ foreach (Employee emp in employees)
 employee1.FirstName = "Jane";
 string empFirstName = employee1.FirstName;
 
-/*employee1.PerformWork(25);
+employee1.PerformWork(25);
 
 int minimumBonus = 100;
 int bonusTax; // if using ref then this needs to be initialized first

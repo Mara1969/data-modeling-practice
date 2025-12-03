@@ -14,7 +14,7 @@ namespace BethanysPieShopHRM.HR
         private DateTime dateOfBirth;
         private const int minimalHoursWorkedUnit = 1;
 
-        private EmployeeType employeeType; // becomes data that we store on our class 
+        // private EmployeeType employeeType; // becomes data that we store on our class 
 
         public static double taxRate = 0.15; // static member belongs to the class itself rather than to any specific object
 
@@ -42,7 +42,7 @@ namespace BethanysPieShopHRM.HR
         public int NumberOfHoursWorked
         {
             get { return numberOfHoursWorked; }
-            private set { numberOfHoursWorked = value; } // private set so it can only be changed within the class
+            protected set { numberOfHoursWorked = value; } // protected set so it can only be changed within the class or derived classes
         }
         public double Wage
         {
@@ -63,19 +63,24 @@ namespace BethanysPieShopHRM.HR
                 }
             }
         }
+        /*public EmployeeType employeeType 
+        { 
+            get { return employeeType; }
+             set { employeeType = value; }
+        } */
 // constructors
-        public Employee(string firstName, string lastName, string email, DateTime dateOfBirth) : this(firstName, lastName, email, dateOfBirth, 0, EmployeeType.Researcher)
+        public Employee(string firstName, string lastName, string email, DateTime dateOfBirth) : this(firstName, lastName, email, dateOfBirth, 0)
         {
             
         }
-        public Employee(string firstName, string lastName, string email, DateTime dateOfBirth, double? hourlyRate, EmployeeType empType)
+        public Employee(string firstName, string lastName, string email, DateTime dateOfBirth, double? hourlyRate)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             DateOfBirth = dateOfBirth;
             HourlyRate = hourlyRate ?? 20; // if Rate is null then assign 20
-            employeeType = empType;
+            //employeeType = empType;
         }
         public void PerformWork()
         {
@@ -88,17 +93,7 @@ namespace BethanysPieShopHRM.HR
         }
         public double ReceiveWage(bool resetHours = true)
         {
-            double wageBeforeTax = 0.0;
-
-            if (employeeType == EmployeeType.Manager)
-            {
-                Console.WriteLine($"An extra was added to the wage since {FirstName} is a manager."); 
-                wageBeforeTax = NumberOfHoursWorked * HourlyRate.Value * 1.25;
-            }
-            else
-            {
-                wageBeforeTax = NumberOfHoursWorked * HourlyRate.Value;
-            }
+            double wageBeforeTax = NumberOfHoursWorked * HourlyRate.Value;
 
             double taxAmount = wageBeforeTax * taxRate;
             wage = wageBeforeTax - taxAmount;   
@@ -112,7 +107,7 @@ namespace BethanysPieShopHRM.HR
         }
         public void DisplayEmployeeDetails()
         {
-            Console.WriteLine($"\nFirst name: \t{FirstName}\nLast name: \t{LastName}\nEmail: \t\t{Email}\nDate of Birth: \t{DateOfBirth.ToShortDateString()}\nTax rate: \t{taxRate}\n Employee Type: \t{employeeType}\n");
+            Console.WriteLine($"\nFirst name: \t{FirstName}\nLast name: \t{LastName}\nEmail: \t\t{Email}\nDate of Birth: \t{DateOfBirth.ToShortDateString()}\nTax rate: \t{taxRate}");
         }
 
         public int CalculateBonus(int bonus)
