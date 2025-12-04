@@ -2,7 +2,7 @@ using System;
 
 namespace BethanysPieShopHRM.HR
 {
-    internal class Address
+    public class Address
     {
         private string street;
         private string houseNumber;

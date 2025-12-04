@@ -8,7 +8,16 @@ Console.WriteLine("------------------\n");
 
 Employee employee1 = new("Bethany", "Smith", "bethany.smith@hotmail.com", new DateTime(1990, 5, 23), 25);
 
-Manager manager1 = new("Alice", "Johnson", "alice.johnson@hotmail.com", new DateTime(1985, 8, 12), 40);
+Console.WriteLine($"How many hours do we need to register for {employee1.FirstName}?");
+int numberOfHours = 0;
+string input = Console.ReadLine();
+numberOfHours = int.Parse(input);
+
+employee1.DisplayEmployeeDetails();
+employee1.PerformWork();
+employee1.PerformWork(numberOfHours);
+
+/*Manager manager1 = new("Alice", "Johnson", "alice.johnson@hotmail.com", new DateTime(1985, 8, 12), 40);
 
 Employee manager2 = new Manager("Bob", "Williams", "bob.williams@hotmail.com", new DateTime(1978, 3, 30), 45); // defined on the base class Employee
 
@@ -43,7 +52,7 @@ foreach (IEmployee emp in employees)
     emp.GiveCompliment();
 }
 
-/* Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1989, 1, 15), 30);
+Employee employee2 = new("John", "Doe", "john.doe@hotmail,com", new DateTime(1989, 1, 15), 30);
 Employee employee3 = new("Kevin", "Jones", "john.doe@hotmail,com", new DateTime(1969, 2, 15), 30);
 Employee employee4 = new("Kim", "Dodds", "john.doe@hotmail,com", new DateTime(1992, 7, 15), 30);
 
