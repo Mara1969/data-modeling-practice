@@ -1,5 +1,7 @@
 
 
+using System.Runtime.ExceptionServices;
+using System.Text;
 using BethanysPieShopHRM.HR;
 
 namespace BethanysPieShopHRM
@@ -13,7 +15,7 @@ namespace BethanysPieShopHRM
         {
             Console.WriteLine("Creating an employee...");
             Console.WriteLine("What type of employee do you want to register?");
-            Console.WriteLine("1. Sales\n2. Manager\n3. Store manager\n4. Researcher");
+            Console.WriteLine("1. Employee\n2. Manager\n3. Store manager\n4. Researcher");
             Console.Write("Your selection: ");
             string employeeType = Console.ReadLine();
 
@@ -43,7 +45,7 @@ namespace BethanysPieShopHRM
             switch (employeeType)
             {
                 case "1":
-                    employee = new Sales(firstName, lastName, email, dateOfBirth, rate);
+                    employee = new Employee(firstName, lastName, email, dateOfBirth, rate);
                     break;
                 case "2":
                     employee = new Manager(firstName, lastName, email, dateOfBirth, rate);
@@ -90,14 +92,85 @@ namespace BethanysPieShopHRM
         }
            internal static void SaveEmployees(List<Employee> employees)
         {
-            //TODO: write code to save employees 
-            Console.ForegroundColor = ConsoleColor.Red;
+            string path = directory + fileName;
+            StringBuilder sb = new StringBuilder();
+            foreach (Employee employee in employees)
+            {
+                string typeOfEmployee = GetEmployeeType(employee);
+                sb.Append($"firstName: {employee.FirstName};");
+                sb.Append($"lastName: {employee.LastName};");
+                sb.Append($"email: {employee.Email};");
+                sb.Append($"dateOfBirth: {employee.DateOfBirth};");
+                sb.Append($"hourlyRate: {employee.HourlyRate};");
+                sb.Append($"{typeOfEmployee};");
+
+                sb.Append(Environment.NewLine); // add a new line so each employee will be on one line in the file 
+            }
+            File.WriteAllText(path, sb.ToString()); 
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Saved employees successfully.");
             Console.ResetColor();
+
+           
+        }
+
+        private static string GetEmployeeType(Employee employee)
+        {
+            if (employee is Manager)
+                return "2";
+            else if (employee is StoreManager)
+                return "3";
+            else if (employee is Employee)
+                return "4";
+            else if (employee is Researcher)
+                return "5";
+            else
+                return "0";
         }
            internal static void LoadEmployees(List<Employee> employees)
         {
-            //TODO: write code to load employees 
-            Console.ForegroundColor = ConsoleColor.Red;
+            string path = directory + fileName;
+            bool existingFileFound = File.Exists(path);
+
+            if (existingFileFound)
+            {
+                employees.Clear(); // clear the employees already loaded in the memory of the application 
+
+                // read the file 
+                string[] employeesAsString = File.ReadAllLines(path); // creating a string array 
+                for (int i = 0; i < employeesAsString.Length; i++)
+                {
+                    string[] employeeSplits = employeesAsString[i].Split(';'); // split the line based on the delimeter ';' to return an array 
+                    string firstName = employeeSplits[0].Substring(employeeSplits[0].IndexOf(':') + 1); // The result of employeeSplits[0] is this 'firstName:Bethany' and 'Substring' takes the part of this from ':' + 1 hence firstname only 
+                    string lastName = employeeSplits[1].Substring(employeeSplits[1].IndexOf(':') + 1);
+                    string email = employeeSplits[2].Substring(employeeSplits[2].IndexOf(':') + 1);
+                    DateTime dateOfBirth = DateTime.Parse(employeeSplits[3].Substring(employeeSplits[3].IndexOf(':') + 1));
+                    double hourlyRate = double.Parse(employeeSplits[4].Substring(employeeSplits[4].IndexOf(':') + 1));
+                    string employeeType = employeeSplits[5].Substring(employeeSplits[5].IndexOf(':') + 1);
+
+                    Employee employee = null;
+                    switch(employeeType)
+                    {
+                        case "1":
+                            employee = new Employee(firstName, lastName, email, dateOfBirth, hourlyRate);
+                            break;
+                        case "2":
+                            employee = new Manager(firstName, lastName, email, dateOfBirth, hourlyRate);
+                            break;
+                        case "3":
+                            employee = new StoreManager(firstName, lastName, email, dateOfBirth, hourlyRate);
+                            break;
+                        case "4":
+                            employee = new Researcher(firstName, lastName, email, dateOfBirth, hourlyRate);
+                        break;
+                    }
+                    employees.Add(employee);
+                }
+
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Loaded {employees.Count} employees!\n\n");
             Console.ResetColor();
         }
     }
