@@ -30,7 +30,8 @@ do
     Console.WriteLine("2. View all employees");
     Console.WriteLine("3. Save data");
     Console.WriteLine("4. Load data"); 
-    Console.WriteLine("5. Quit application"); 
+    Console.WriteLine("5. Load specific employee"); 
+    Console.WriteLine("6. Quit application"); 
     Console.WriteLine("Your selection: "); 
 
     userChoice = Console.ReadLine() ?? string.Empty.Trim();
@@ -49,7 +50,10 @@ do
         case "4":
             Utilities.LoadEmployees(employees);
             break;
-        case "5": 
+        case "5":
+            Utilities.LoadEmployeeById(employees);
+            break;
+        case "6": 
             break; // Do nothing, loop will exit
         default:
             Console.WriteLine("Invalid choice. Please try again.");

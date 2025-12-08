@@ -1,5 +1,7 @@
 
 
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using BethanysPieShopHRM.HR;
@@ -131,47 +133,92 @@ namespace BethanysPieShopHRM
         {
             string path = directory + fileName;
             bool existingFileFound = File.Exists(path);
-
-            if (existingFileFound)
+            try 
             {
-                employees.Clear(); // clear the employees already loaded in the memory of the application 
-
-                // read the file 
-                string[] employeesAsString = File.ReadAllLines(path); // creating a string array 
-                for (int i = 0; i < employeesAsString.Length; i++)
+                if (existingFileFound)
                 {
-                    string[] employeeSplits = employeesAsString[i].Split(';'); // split the line based on the delimeter ';' to return an array 
-                    string firstName = employeeSplits[0].Substring(employeeSplits[0].IndexOf(':') + 1); // The result of employeeSplits[0] is this 'firstName:Bethany' and 'Substring' takes the part of this from ':' + 1 hence firstname only 
-                    string lastName = employeeSplits[1].Substring(employeeSplits[1].IndexOf(':') + 1);
-                    string email = employeeSplits[2].Substring(employeeSplits[2].IndexOf(':') + 1);
-                    DateTime dateOfBirth = DateTime.Parse(employeeSplits[3].Substring(employeeSplits[3].IndexOf(':') + 1));
-                    double hourlyRate = double.Parse(employeeSplits[4].Substring(employeeSplits[4].IndexOf(':') + 1));
-                    string employeeType = employeeSplits[5].Substring(employeeSplits[5].IndexOf(':') + 1);
+                    employees.Clear(); // clear the employees already loaded in the memory of the application 
 
-                    Employee employee = null;
-                    switch(employeeType)
+                    // read the file 
+                    string[] employeesAsString = File.ReadAllLines(path); // creating a string array 
+                    for (int i = 0; i < employeesAsString.Length; i++)
                     {
-                        case "1":
-                            employee = new Employee(firstName, lastName, email, dateOfBirth, hourlyRate);
+                        string[] employeeSplits = employeesAsString[i].Split(';'); // split the line based on the delimeter ';' to return an array 
+                        string firstName = employeeSplits[0].Substring(employeeSplits[0].IndexOf(':') + 1); // The result of employeeSplits[0] is this 'firstName:Bethany' and 'Substring' takes the part of this from ':' + 1 hence firstname only 
+                        string lastName = employeeSplits[1].Substring(employeeSplits[1].IndexOf(':') + 1);
+                        string email = employeeSplits[2].Substring(employeeSplits[2].IndexOf(':') + 1);
+                        DateTime dateOfBirth = DateTime.Parse(employeeSplits[3].Substring(employeeSplits[3].IndexOf(':') + 1));
+                        double hourlyRate = double.Parse(employeeSplits[4].Substring(employeeSplits[4].IndexOf(':') + 1));
+                        string employeeType = employeeSplits[5].Substring(employeeSplits[5].IndexOf(':') + 1);
+
+                        Employee employee = null;
+                        switch(employeeType)
+                        {
+                            case "1":
+                                employee = new Employee(firstName, lastName, email, dateOfBirth, hourlyRate);
+                                break;
+                            case "2":
+                                employee = new Manager(firstName, lastName, email, dateOfBirth, hourlyRate);
+                                break;
+                            case "3":
+                                employee = new StoreManager(firstName, lastName, email, dateOfBirth, hourlyRate);
+                                break;
+                            case "4":
+                                employee = new Researcher(firstName, lastName, email, dateOfBirth, hourlyRate);
                             break;
-                        case "2":
-                            employee = new Manager(firstName, lastName, email, dateOfBirth, hourlyRate);
-                            break;
-                        case "3":
-                            employee = new StoreManager(firstName, lastName, email, dateOfBirth, hourlyRate);
-                            break;
-                        case "4":
-                            employee = new Researcher(firstName, lastName, email, dateOfBirth, hourlyRate);
-                        break;
+                        }
+                        employees.Add(employee);
                     }
-                    employees.Add(employee);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Loaded {employees.Count} employees!\n\n");
+                    //Console.ResetColor();
                 }
-
+            }    
+            catch (IndexOutOfRangeException iex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Something went wrong parsing the file, please check the data!");
+                Console.WriteLine(iex.Message);
+                //Console.ResetColor();
+                    
+                
             }
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Loaded {employees.Count} employees!\n\n");
-            Console.ResetColor();
+            catch(FileNotFoundException fnfex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The file couldn't be found!");
+                Console.WriteLine(fnfex.Message);
+                Console.WriteLine(fnfex.StackTrace); // to show where the exception occured 
+                //Console.ResetColor();
+            }
+            // catch any other exception 
+            catch(Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+               // Console.ResetColor();
+            }
+            finally
+            {
+                Console.ResetColor();
+            }
+        
         }
+        internal static void LoadEmployeeById(List<Employee> employees)
+        {
+            Console.WriteLine("Enter the employee ID you want to visualise: ");
+
+            try
+            {
+                int selectedID = int.Parse(Console.ReadLine());
+                Employee selectedEmployee = employees[selectedID];
+                selectedEmployee.DisplayEmployeeDetails();
+            }
+            catch (FormatException fex)
+            {
+                Console.WriteLine(fex.Message); // writes the exception message 
+            }
+        }
+
     }
 }
