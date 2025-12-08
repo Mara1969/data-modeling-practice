@@ -1,9 +1,67 @@
 ﻿using System.Text;
+using BethanysPieShopHRM;
 using BethanysPieShopHRM.Accounting;
 using BethanysPieShopHRM.HR;
 
+List<Employee> employees = new List<Employee>(); // To keep track of the employees 
 
-Console.WriteLine("Creating an employee!");
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("************************************");
+Console.WriteLine("* Bethany's Pie Shop Employee App! *");
+Console.WriteLine("************************************");
+Console.ForegroundColor = ConsoleColor.White;
+
+string userChoice;
+Console.ForegroundColor = ConsoleColor.Blue;
+
+Utilities.CheckForExistingEmployeeFile();
+
+do
+{   
+    Console.ForegroundColor = ConsoleColor.Cyan;
+    Console.WriteLine($"Loaded {employees.Count} employee(s)\n\n");
+
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("********************");
+    Console.WriteLine("* Select an action *");
+    Console.WriteLine("********************");
+
+    Console.WriteLine("1. Register an employee");
+    Console.WriteLine("2. View all employees");
+    Console.WriteLine("3. Save data");
+    Console.WriteLine("4. Load data"); 
+    Console.WriteLine("5. Quit application"); 
+    Console.WriteLine("Your selection: "); 
+
+    userChoice = Console.ReadLine() ?? string.Empty.Trim();
+
+    switch (userChoice)
+    {
+        case "1":
+            Utilities.RegisterEmployee(employees);
+            break;
+        case "2":
+            Utilities.ViewAllEmployees(employees);
+            break;
+        case "3":
+            Utilities.SaveEmployees(employees);
+            break;
+        case "4":
+            Utilities.LoadEmployees(employees);
+            break;
+        case "5": 
+            break; // Do nothing, loop will exit
+        default:
+            Console.WriteLine("Invalid choice. Please try again.");
+            break;
+    }
+
+} while (userChoice != "5");
+
+Console.WriteLine("Exiting application. Goodbye!");
+
+
+/*Console.WriteLine("Creating an employee!");
 Console.WriteLine("------------------\n");
 
 Employee employee1 = new("Bethany", "Smith", "bethany.smith@hotmail.com", new DateTime(1990, 5, 23), 25);
@@ -17,7 +75,7 @@ employee1.DisplayEmployeeDetails();
 employee1.PerformWork();
 employee1.PerformWork(numberOfHours);
 
-/*Manager manager1 = new("Alice", "Johnson", "alice.johnson@hotmail.com", new DateTime(1985, 8, 12), 40);
+Manager manager1 = new("Alice", "Johnson", "alice.johnson@hotmail.com", new DateTime(1985, 8, 12), 40);
 
 Employee manager2 = new Manager("Bob", "Williams", "bob.williams@hotmail.com", new DateTime(1978, 3, 30), 45); // defined on the base class Employee
 
