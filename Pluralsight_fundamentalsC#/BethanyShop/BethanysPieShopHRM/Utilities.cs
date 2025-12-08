@@ -61,9 +61,25 @@ namespace BethanysPieShopHRM
         }
         internal static void CheckForExistingEmployeeFile()
         {
-            //TODO: write code to check if file exists 
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.ResetColor();
+            string path = directory + fileName;
+            bool existingFileFound = File.Exists(path);
+            
+            if (existingFileFound)
+            {
+                Console.WriteLine("An existing file with Employee data is found");
+            }
+            else
+            {
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("Directory is ready for saving files.");
+                    Console.ResetColor();
+                }    
+            }
+
+            
         }
           internal static void ViewAllEmployees(List<Employee> employees)
         {
